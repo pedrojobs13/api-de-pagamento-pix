@@ -1,7 +1,8 @@
 CREATE TABLE pagamento
 (
-    id     bigint      not null,
-    status varchar(15) not null,
+    id           bigint      not null auto_increment,
+    id_pagamento bigint      not null,
+    status       varchar(15) not null,
     primary key (id)
 
 )engine = InnoDB default charset = UTF8MB4;

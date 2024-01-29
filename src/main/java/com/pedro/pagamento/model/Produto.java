@@ -22,12 +22,15 @@ public class Produto {
   @Id
   private Long id;
 
+
+
   private String title;
   private String descricao;
   private String foto;
   private BigDecimal valor;
 
-//  @JsonIgnore
-//  @OneToMany(mappedBy = "produto")
-//  private List<Cliente> clientes = new ArrayList<>();
+  //  @JsonIgnore
+  //  @OneToMany(mappedBy = "produto")
+  //  private List<Cliente> clientes = new ArrayList<>();
+
 }
