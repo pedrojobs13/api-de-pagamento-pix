@@ -1,11 +1,9 @@
 CREATE TABLE pagamento
 (
-    id           bigint      not null auto_increment,
+    id SERIAL PRIMARY KEY NOT NULL,
     id_pagamento bigint      not null,
-    status       varchar(15) not null,
-    primary key (id)
-
-)engine = InnoDB default charset = UTF8MB4;
+    status       varchar(15) not null
+);
 
 
 ALTER TABLE
