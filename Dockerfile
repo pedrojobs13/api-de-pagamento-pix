@@ -1,9 +1,7 @@
 FROM maven:3.8.5-openjdk-17 AS build
 COPY . .
 RUN mvn clean package
-
-# Alternatively, use specific goals or plugins
-# RUN mvn install
+RUN mvn install
 
 FROM openjdk:17.0.1-jdk-slim
 COPY --from=build/target pagamento-0.0.1-SNAPSHOT.jar demo.jar
