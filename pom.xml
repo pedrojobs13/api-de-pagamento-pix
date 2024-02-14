@@ -88,6 +88,26 @@
   <build>
     <plugins>
       <plugin>
+        <!-- Plugin Flyway Maven -->
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>7.14.0</version> <!-- Use a versão mais recente do plugin Flyway -->
+        <configuration>
+          <url>jdbc:postgresql://dpg-cn6hi06d3nmc739j77rg-a:5432/dbpagamentos_k8cq</url>
+          <user>admin</user>
+          <password>Fo0gwI5edk0p0ySbojA0HKqE2byuMVhQ</password>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version> <!-- Versão do driver PostgreSQL -->
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <!-- Plugin Spring Boot Maven -->
+      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
@@ -101,5 +121,6 @@
       </plugin>
     </plugins>
   </build>
+
 
 </project>
