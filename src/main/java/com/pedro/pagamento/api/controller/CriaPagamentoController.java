@@ -57,7 +57,7 @@ public class CriaPagamentoController {
     verificaEAtualizaPagamentoService.recebeWebHookPagamento(jsonresponseBody);
   }
 
-  @CrossOrigin
+
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/pagadores")
   public List<ClienteModelDTO> buscaPagadoresConfirmados() {
