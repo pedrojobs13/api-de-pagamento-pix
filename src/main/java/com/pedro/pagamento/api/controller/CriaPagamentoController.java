@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,8 @@ public class CriaPagamentoController {
   //      return verificaEAtualizaPagamentoService.verificarEAtualizaStatusDaCompra(id);
   //    }
 
+
+
   @ResponseStatus(HttpStatus.OK)
   @PostMapping("/webhook")
   public void updateWebhookPagamentoStatus(
@@ -54,6 +57,7 @@ public class CriaPagamentoController {
     verificaEAtualizaPagamentoService.recebeWebHookPagamento(jsonresponseBody);
   }
 
+  @CrossOrigin
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/pagadores")
   public List<ClienteModelDTO> buscaPagadoresConfirmados() {
