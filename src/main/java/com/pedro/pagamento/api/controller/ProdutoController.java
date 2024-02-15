@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
@@ -40,7 +40,6 @@ public class ProdutoController {
     return produtoModelAssembler.toModel(produtoService.salvar(produto));
   }
 
-  @CrossOrigin
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public ProdutoModelDTO buscar(@PathVariable Long id) {
@@ -48,11 +47,10 @@ public class ProdutoController {
     return produtoModelAssembler.toModel(produto);
   }
 
-  @CrossOrigin
+
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public List<ProdutoModelDTO> listar() {
-
     return produtoModelAssembler.toCollectionModel(produtoRepository.findAll());
   }
 }
