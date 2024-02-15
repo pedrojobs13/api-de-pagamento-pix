@@ -39,7 +39,7 @@ public class ProdutoController {
 
     return produtoModelAssembler.toModel(produtoService.salvar(produto));
   }
-
+  @CrossOrigin(origins = "*")
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public ProdutoModelDTO buscar(@PathVariable Long id) {
@@ -47,7 +47,7 @@ public class ProdutoController {
     return produtoModelAssembler.toModel(produto);
   }
 
-
+  @CrossOrigin(origins = "*")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public List<ProdutoModelDTO> listar() {
