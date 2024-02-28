@@ -1,12 +1,1 @@
-name: Faça uma requisição no Render a cada 14 minutos
 
-on:
-  schedule:
-    - cron: "*/14 * * * *"
-
-jobs:
-  render-request:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Products
-        run: curl -X GET https://api-pagamento-64ip.onrender.com/pagar/pagadores
