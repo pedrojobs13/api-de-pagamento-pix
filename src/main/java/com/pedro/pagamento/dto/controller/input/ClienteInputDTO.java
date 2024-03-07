@@ -17,8 +17,7 @@ public class ClienteInputDTO {
   @NotBlank private String sobrenome;
   @Email private String email;
 
-  @Min(value = 5)
-  private BigDecimal valor;
+  @NotNull private BigDecimal valor;
 
   @Valid @NotNull private ProdutoIdInputDTO produto;
 }
