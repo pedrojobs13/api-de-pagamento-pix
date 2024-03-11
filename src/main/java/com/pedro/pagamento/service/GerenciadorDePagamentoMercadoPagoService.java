@@ -2,6 +2,7 @@ package com.pedro.pagamento.service;
 
 import com.pedro.pagamento.adapter.MercadoPagoAdapter;
 import com.pedro.pagamento.dto.response.MercadoPagoDto;
+import com.pedro.pagamento.exception.BusinessException;
 import com.pedro.pagamento.exception.ClienteNaoEncontradoException;
 import com.pedro.pagamento.exception.ProdutoNaoEncontradoException;
 import com.pedro.pagamento.model.Cliente;
@@ -14,45 +15,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class GerenciadorDePagamentoMercadoPagoService {
-  @Autowired private MercadoPagoAdapter formaDePagamentoAdapter;
-  @Autowired private ClienteRepository clienteRepository;
-  @Autowired private ProdutoRepository produtoRepository;
-  @Autowired private CadastroPagamentoService cadastroPagamentoService;
-  private static final String MSG_CLIENTE_NAO_ENCONTRADO = "Cliente de id [%d] não foi encontrado";
-  private static final String MSG_PRODUTO_NAO_ENCONTADO = "Produot de id [%d] não foi encontrado";
+    @Autowired
+    private MercadoPagoAdapter formaDePagamentoAdapter;
+    @Autowired
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    @Autowired
+    private CadastroPagamentoService cadastroPagamentoService;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
+    private static final String MSG_CLIENTE_NAO_ENCONTRADO = "Cliente de id [%d] não foi encontrado";
+    private static final String MSG_PRODUTO_NAO_ENCONTADO = "Produot de id [%d] não foi encontrado";
 
-  @Transactional
-  public MercadoPagoDto processaPagamento(String codigo) {
-    Cliente cliente = buscaCliente(codigo);
-    Long produtoId = cliente.getProduto().getId();
+    @Transactional
+    public MercadoPagoDto processaPagamento(String codigo) {
+        Cliente cliente = buscaCliente(codigo);
+        Long produtoId = cliente.getProduto().getId();
 
-    Produto produto = buscaProduto(produtoId);
+        Produto produto = buscaProduto(produtoId);
 
-    MercadoPagoDto mercadoPagoDto = formaDePagamentoAdapter.realizaPagamento(cliente, produto);
+        if (cliente.getPagamento() == null) {
 
-    criaPagamentoTable(mercadoPagoDto, cliente);
+            MercadoPagoDto mercadoPagoDto = formaDePagamentoAdapter.realizaPagamento(cliente, produto);
 
-    return mercadoPagoDto;
-  }
+            criaPagamentoTable(mercadoPagoDto, cliente);
 
-  private void criaPagamentoTable(MercadoPagoDto mercadoPagoDto, Cliente cliente) {
-
-    if (mercadoPagoDto != null && cliente != null) {
-      cadastroPagamentoService.save(mercadoPagoDto, cliente);
+            return mercadoPagoDto;
+        }
+        throw new BusinessException("Já gerado");
     }
-  }
 
-  private Cliente buscaCliente(String codigo) {
-    return clienteRepository
-        .findByCodigo(codigo)
-        .orElseThrow(() -> new ClienteNaoEncontradoException(MSG_CLIENTE_NAO_ENCONTRADO));
-  }
+    private void criaPagamentoTable(MercadoPagoDto mercadoPagoDto, Cliente cliente) {
 
-  private Produto buscaProduto(Long produtoId) {
-    return produtoRepository
-        .findById(produtoId)
-        .orElseThrow(() -> new ProdutoNaoEncontradoException(MSG_PRODUTO_NAO_ENCONTADO));
-  }
+        if (mercadoPagoDto != null && cliente != null) {
+            cadastroPagamentoService.save(mercadoPagoDto, cliente);
+        }
+    }
+
+    private Cliente buscaCliente(String codigo) {
+        return clienteRepository
+                .findByCodigo(codigo)
+                .orElseThrow(() -> new ClienteNaoEncontradoException(MSG_CLIENTE_NAO_ENCONTRADO));
+    }
+
+    private Produto buscaProduto(Long produtoId) {
+        return produtoRepository
+                .findById(produtoId)
+                .orElseThrow(() -> new ProdutoNaoEncontradoException(MSG_PRODUTO_NAO_ENCONTADO));
+    }
 }

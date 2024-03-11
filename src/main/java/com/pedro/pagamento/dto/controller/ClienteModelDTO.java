@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClienteModelDTO {
+ private PagamentoResumoModelDTO pagamento;
   private String codigo;
   private String nome;
   private String sobrenome;

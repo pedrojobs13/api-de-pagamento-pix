@@ -7,7 +7,6 @@ import com.pedro.pagamento.exception.BusinessException;
 import com.pedro.pagamento.exception.PagamentoNaoEncontradoException;
 import com.pedro.pagamento.model.Pagamento;
 import com.pedro.pagamento.repository.PagamentoRepository;
-import com.pedro.pagamento.webhookstate.SendMessageState;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +33,6 @@ public class VerificaEAtualizaPagamentoService {
   private final ObjectMapper mapper = new ObjectMapper();
   private static final String MSG_PAGAMENTO_NAO_ENCONTRADO =
       "Pagamento de id [%d] não foi encontrado";
-  @Autowired private SendMessageState messageState;
 
   @Value("${tokenMercadoPago}")
   private String token;
@@ -79,7 +77,6 @@ public class VerificaEAtualizaPagamentoService {
         Map<String, Object> response = getResponse(webhookDTO.getData().getId());
 
         atualizarPagamento(response, pagamentoAtual);
-        messageState.sendMessageToConsumer();
       }
 
     } catch (JsonProcessingException e) {

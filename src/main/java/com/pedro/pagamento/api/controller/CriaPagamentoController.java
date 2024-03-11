@@ -13,8 +13,6 @@ import com.pedro.pagamento.service.VerificaEAtualizaPagamentoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,25 +40,6 @@ public class CriaPagamentoController {
     return gerenciadorDePagamentoMercadoPagoService.processaPagamento(codigo);
   }
 
-  //  @CrossOrigin(origins = "http://localhost:3000")
-  //  @ResponseStatus(HttpStatus.OK)
-  //  @GetMapping(value = "/status/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  //  public Flux<ServerSentEvent<String>> buscar(@PathVariable Long id) {
-  //    Pagamento pagamento =
-  // verificaEAtualizaPagamentoService.verificarEAtualizaStatusDaCompra(id);
-  //    System.out.println(pagamento.getId());
-  //
-  //    return Flux.interval(Duration.ofSeconds(9))
-  //        .map(sequence -> {
-  //          String eventData = "data: " + pagamento.getStatus() + "\n\n"; // Adiciona o formato de
-  // evento de texto
-  //          return ServerSentEvent.<String>builder()
-  //              .id(String.valueOf(sequence))
-  //              .event("periodic-event")
-  //              .data(eventData)
-  //              .build();
-  //        });
-  //  }
 
   @CrossOrigin
   @GetMapping("/status/{id}")
