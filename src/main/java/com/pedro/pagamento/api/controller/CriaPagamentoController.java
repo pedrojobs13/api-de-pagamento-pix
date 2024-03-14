@@ -1,5 +1,6 @@
 package com.pedro.pagamento.api.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pedro.pagamento.api.controller.assembler.ClienteModelAssembler;
 import com.pedro.pagamento.api.controller.assembler.PagamentoModelAssembler;
 import com.pedro.pagamento.dto.controller.ClienteModelDTO;
@@ -36,7 +37,7 @@ public class CriaPagamentoController {
   @CrossOrigin
   @GetMapping("/{codigo}")
   @ResponseStatus(HttpStatus.CREATED)
-  public MercadoPagoDto criaPagamento(@PathVariable String codigo) {
+  public MercadoPagoDto criaPagamento(@PathVariable String codigo) throws JsonProcessingException {
     return gerenciadorDePagamentoMercadoPagoService.processaPagamento(codigo);
   }
 
